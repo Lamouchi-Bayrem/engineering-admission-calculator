@@ -1,24 +1,11 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html lang="en">
 <head>
-    <meta charset='UTF-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <title>Score Calculator - Engineering Admission 2023</title>
-    <script src='https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js'></script>
-    <script src='https://cdn.tailwindcss.com'></script>
-    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Score Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
-        .fade-in { animation: fadeIn 0.5s ease-in; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .progress-bar { transition: width 0.3s ease-in-out; }
-        .invalid-input { border-color: #ef4444 !important; }
-        .tooltip { visibility: hidden; opacity: 0; transition: opacity 0.3s; }
-        .group:hover .tooltip { visibility: visible; opacity: 1; }
-
         body {
             background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('https://www.vancopayments.com/hs-fs/hubfs/Graduation%20-%20Cap%20throw.png?width=2460&height=1386&name=Graduation%20-%20Cap%20throw.png');
             background-size: cover;
@@ -27,196 +14,281 @@
             background-repeat: no-repeat;
         }
     </style>
-
-
 </head>
-<body >
-    <header class='bg-blue-600 text-white shadow-md sticky top-0 z-10'>
-        <nav class='container mx-auto px-4 py-4 flex justify-between items-center'>
-            <div class='flex items-center space-x-2'>
-                <i class='fas fa-graduation-cap text-2xl'></i>
-                <h1 class='text-xl font-bold'>Score Calculator</h1>
+<body class="bg-gray-100">
+    <nav class="navbar p-4">
+        <div class="container mx-auto flex justify-between">
+            <div class="text-xl font-bold">Score Calculator</div>
+            <div>
+                <a href="#home" class="px-4">Home</a>
+                <a href="#about" class="px-4">About</a>
+                <a href="#contact" class="px-4">Contact</a>
             </div>
-            <ul class='flex space-x-6'>
-                <li><a href='/' class='hover:underline transition duration-200'>Home</a></li>
-                <li><a href='#about' class='hover:underline transition duration-200'>About</a></li>
-                <li><a href='#contact' class='hover:underline transition duration-200'>Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main class='flex-grow flex items-center justify-center p-4'>
-        <div class='bg-white/60 backdrop-blur-sm p-6 rounded-lg shadow-2xl w-full max-w-3xl'>
-            <h1 class='text-3xl font-bold mb-6 text-center text-blue-600'>Engineering Admission Score Calculator 2023</h1>
-            <div class='mb-6'>
-                <label class='block text-sm font-medium text-gray-700'>Select Year</label>
-                <select id='year' class='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 bg-white'>
-                    <option value='first'>First Year</option>
-                    <option value='second'>Second Year</option>
+        </div>
+    </nav>
+
+    <section id="home" class="section bg-white">
+        <div class="container mx-auto">
+            <h1 class="text-2xl font-bold mb-4">Engineering Admission Score Calculator 2023</h1>
+            <div class="form-container">
+                <label for="year-select" class="block mb-2">Select Year</label>
+                <select id="year-select" class="border p-2 w-full mb-4">
+                    <option value="first">First Year</option>
+                    <option value="second">Second Year</option>
                 </select>
-            </div>
-            <form id='scoreForm' class='space-y-6'>
-                <div id='formFields' class='grid grid-cols-1 md:grid-cols-2 gap-4'></div>
-                <div class='relative'>
-                    <button type='submit' id='calculateBtn' class='w-full bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-400 transition duration-200'>Calculate Score</button>
-                    <div id='progressBar' class='hidden absolute w-0 h-1 bg-blue-500 bottom-0 left-0 rounded-full progress-bar'></div>
+
+                <div id="first-year-form" class="form-group">
+                    <h2 class="text-xl mb-2">First Year Inputs</h2>
+                    <input type="number" id="mg" class="border p-2 w-full mb-2" placeholder="General Average (mg)" step="0.01">
+                    <input type="number" id="rank1" class="border p-2 w-full mb-2" placeholder="Rank 1" min="1">
+                    <input type="number" id="effectif1" class="border p-2 w-full mb-2" placeholder="Effectif 1" min="1">
+                    <input type="number" id="rank2" class="border p-2 w-full mb-2" placeholder="Rank 2" min="1">
+                    <input type="number" id="effectif2" class="border p-2 w-full mb-2" placeholder="Effectif 2" min="1">
+                    <input type="number" id="birthYear" class="border p-2 w-full mb-2" placeholder="Birth Year" min="1900" max="2025">
+                    <input type="number" id="bacScore" class="border p-2 w-full mb-2" placeholder="Bac Score" step="0.01">
+                    <input type="number" id="french1" class="border p-2 w-full mb-2" placeholder="French 1" step="0.01">
+                    <input type="number" id="french2" class="border p-2 w-full mb-2" placeholder="French 2" step="0.01">
+                    <input type="number" id="english1" class="border p-2 w-full mb-2" placeholder="English 1" step="0.01">
+                    <input type="number" id="english2" class="border p-2 w-full mb-2" placeholder="English 2" step="0.01">
+                    <input type="number" id="math1" class="border p-2 w-full mb-2" placeholder="Math 1" step="0.01">
+                    <input type="number" id="math2" class="border p-2 w-full mb-2" placeholder="Math 2" step="0.01">
+                    <input type="number" id="physics1" class="border p-2 w-full mb-2" placeholder="Physics 1" step="0.01">
+                    <input type="number" id="physics2" class="border p-2 w-full mb-2" placeholder="Physics 2" step="0.01">
+                    <input type="number" id="cs1" class="border p-2 w-full mb-2" placeholder="CS 1" step="0.01">
+                    <input type="number" id="cs2" class="border p-2 w-full mb-2" placeholder="CS 2" step="0.01">
                 </div>
-            </form>
-            <div id='error' class='hidden mt-4 p-4 bg-red-100 text-red-700 rounded-md'></div>
-            <div id='result' class='hidden mt-4 p-4 bg-white rounded-md fade-in'>
-                <h2 class='text-lg font-semibold mb-2 text-blue-600'>Results</h2>
-                <div id='resultContent' class='text-gray-700'></div>
-                <h3 class='text-md font-semibold mt-4 mb-2 text-blue-600'>Orientation Suggestions</h3>
-                <ul id='suggestions' class='list-disc pl-5 space-y-2'></ul>
+
+                <div id="second-year-form" class="form-group hidden">
+                    <h2 class="text-xl mb-2">Second Year Inputs</h2>
+                    <input type="number" id="l1" class="border p-2 w-full mb-2" placeholder="L1 Score" step="0.01">
+                    <input type="number" id="l2" class="border p-2 w-full mb-2" placeholder="L2 Score" step="0.01">
+                    <input type="number" id="l3" class="border p-2 w-full mb-2" placeholder="L3 Score" step="0.01">
+                    <input type="number" id="m1" class="border p-2 w-full mb-2" placeholder="M1 Score" step="0.01">
+                    <input type="number" id="birthYear2" class="border p-2 w-full mb-2" placeholder="Birth Year" min="1900" max="2025">
+                    <input type="number" id="bacScore2" class="border p-2 w-full mb-2" placeholder="Bac Score" step="0.01">
+                    <label class="flex items-center mb-2">
+                        <input type="checkbox" id="redoublant" class="mr-2"> Redoublant
+                    </label>
+                </div>
+
+                <button onclick="calculateScore()" class="bg-blue-500 text-white p-2 rounded w-full">Calculate Score</button>
+
+                <div id="results" class="result-container hidden">
+                    <h2 class="text-xl mb-2">Results</h2>
+                    <div id="score-results"></div>
+                    <h3 class="text-lg mt-4 mb-2">Orientation Suggestions</h3>
+                    <ul id="suggestions" class="list-disc pl-5"></ul>
+                </div>
             </div>
-            <div class='mt-6'>
-                <h3 class='text-md font-semibold mb-2 text-blue-600'>Resources</h3>
-                <ul class='list-disc pl-5 space-y-2'>
-                    <li><a href='https://csingenieur.inscription.tn/PDF_ScoreE/%D8%A8%D9%84%D8%A7%D8%BA%20%D8%A7%D9%84%D9%85%D9%86%D8%A7%D8%B8%D8%B1%D8%A7%D8%AA%20%D8%A7%D9%84%D8%AE%D8%B5%D9%88%D8%B5%D9%8A%D8%A9%202024.pdf' class='text-blue-600 hover:underline transition duration-200' target='_blank'>بلاغ المناظرات الخصوصية 2024</a></li>
-                    <li><a href='https://csingenieur.inscription.tn/PDF_ScoreE/%D9%85%D9%84%D8%AD%D9%82%20%D8%A7%D9%84%D9%85%D9%86%D8%A7%D8%B8%D8%B1%D8%A7%D8%AA%20%D8%A7%D9%84%D8%AE%D8%B5%D9%88%D8%B5%D9%8A%D8%A9%20-%20%D8%B3%D9%86%D8%A9%20%D8%A3%D9%88%D9%84%D9%89%20%D8%AF%D9%88%D8%B1%D8%A9%20%D8%B3%D9%86%D8%A9%202024.pdf' class='text-blue-600 hover:underline transition duration-200' target='_blank'>ملحق المناظرات الخصوصية - سنة أولى دورة سنة 2024</a></li>
-                    <li><a href='https://csingenieur.inscription.tn/PDF_ScoreE/Crit%C3%A8res%20de%20S%C3%A9lection%20des%20Candidats%20aux%20Concours%20Sp%C3%A9cifiques-2024.pdf' class='text-blue-600 hover:underline transition duration-200' target='_blank'>Critères de Sélection des Candidats aux Concours Spécifiques 2024</a></li>
+
+            <div class="mt-8">
+                <h2 class="text-xl mb-2">Resources</h2>
+                <ul class="list-disc pl-5">
+                    <li><a href="#" class="text-blue-500">بلاغ المناظرات الخصوصية 2024</a></li>
+                    <li><a href="#" class="text-blue-500">ملحق المناظرات الخصوصية - سنة أولى دورة سنة 2024</a></li>
+                    <li><a href="#" class="text-blue-500">Critères de Sélection des Candidats aux Concours Spécifiques 2024</a></li>
                 </ul>
             </div>
         </div>
-    </main>
-    <footer id='about' class='bg-gray-200 py-4'>
-        <div class='container mx-auto px-4'>
-            <h2 class='text-lg font-semibold text-blue-600 mb-2'>About</h2>
-            <p class='text-gray-700'>This tool calculates admission scores for Tunisian engineering schools based on 2023-2024 criteria, providing orientation suggestions and official resources.</p>
+    </section>
+
+    <section id="about" class="section bg-gray-50">
+        <div class="container mx-auto">
+            <h2 class="text-xl font-bold mb-4">About</h2>
+            <p>This tool calculates admission scores for Tunisian engineering schools based on 2023-2024 criteria, providing orientation suggestions and official resources.</p>
         </div>
-    </footer>
-    <footer id='contact' class='bg-gray-300 py-4'>
-        <div class='container mx-auto px-4'>
-            <h2 class='text-lg font-semibold text-blue-600 mb-2'>Contact</h2>
-            <p class='text-gray-700'>For inquiries, contact the administration via <a href='https://csingenieur.inscription.tn/' class='text-blue-600 hover:underline transition duration-200' target='_blank'>csingenieur.inscription.tn</a>.</p>
+    </section>
+
+    <section id="contact" class="section bg-white">
+        <div class="container mx-auto">
+            <h2 class="text-xl font-bold mb-4">Contact</h2>
+            <p>For inquiries, contact the administration via <a href="mailto:csingenieur.inscription.tn" class="text-blue-500">csingenieur.inscription.tn</a>.</p>
         </div>
-    </footer>
+    </section>
+
     <script>
-        const form = document.getElementById('scoreForm');
-        const yearSelect = document.getElementById('year');
-        const formFields = document.getElementById('formFields');
-        const calculateBtn = document.getElementById('calculateBtn');
-        const errorDiv = document.getElementById('error');
-        const resultDiv = document.getElementById('result');
-        const resultContent = document.getElementById('resultContent');
-        const suggestionsList = document.getElementById('suggestions');
-        const progressBar = document.getElementById('progressBar');
+        const ORIENTATION_THRESHOLDS = {
+            'ENIT': { min_score: 85, avg_score: 90 },
+            'ENSI': { min_score: 80, avg_score: 88 },
+            'INSAT': { min_score: 78, avg_score: 85 }
+        };
 
-        const firstYearFields = [
-            { label: 'General Average (Mg)', name: 'mg', type: 'number', step: '0.01', min: '0', max: '20', required: true, tooltip: 'Average of first two years (0-20)' },
-            { label: 'Birth Year', name: 'birthYear', type: 'number', min: '1900', max: '2023', required: true, tooltip: 'Year of birth' },
-            { label: 'Bac Score', name: 'bacScore', type: 'number', step: '0.01', min: '0', max: '20', required: true, tooltip: 'Baccalaureate score (0-20)' },
-            { label: 'Rank Year 1', name: 'rank1', type: 'number', min: '1', required: true, tooltip: 'Class rank for year 1' },
-            { label: 'Effectif Year 1', name: 'effectif1', type: 'number', min: '1', required: true, tooltip: 'Total students in year 1' },
-            { label: 'Rank Year 2', name: 'rank2', type: 'number', min: '1', required: true, tooltip: 'Class rank for year 2' },
-            { label: 'Effectif Year 2', name: 'effectif2', type: 'number', min: '1', required: true, tooltip: 'Total students in year 2' },
-            { label: 'French Year 1', name: 'french1', type: 'number', step: '0.01', min: '0', max: '20', required: true, tooltip: 'French score year 1 (0-20)' },
-            { label: 'French Year 2', name: 'french2', type: 'number', step: '0.01', min: '0', max: '20', required: true, tooltip: 'French score year 2 (0-20)' },
-            { label: 'English Year 1', name: 'english1', type: 'number', step: '0.01', min: '0', max: '20', required: true, tooltip: 'English score year 1 (0-20)' },
-            { label: 'English Year 2', name: 'english2', type: 'number', step: '0.01', min: '0', max: '20', required: true, tooltip: 'English score year 2 (0-20)' },
-            { label: 'Math Year 1', name: 'math1', type: 'number', step: '0.01', min: '0', max: '20', required: true, tooltip: 'Math score year 1 (0-20)' },
-            { label: 'Math Year 2', name: 'math2', type: 'number', step: '0.01', min: '0', max: '20', required: true, tooltip: 'Math score year 2 (0-20)' },
-            { label: 'Physics Year 1', name: 'physics1', type: 'number', step: '0.01', min: '0', max: '20', required: true, tooltip: 'Physics score year 1 (0-20)' },
-            { label: 'Physics Year 2', name: 'physics2', type: 'number', step: '0.01', min: '0', max: '20', required: true, tooltip: 'Physics score year 2 (0-20)' },
-            { label: 'Computer Science Year 1', name: 'cs1', type: 'number', step: '0.01', min: '0', max: '20', required: true, tooltip: 'CS score year 1 (0-20)' },
-            { label: 'Computer Science Year 2', name: 'cs2', type: 'number', step: '0.01', min: '0', max: '20', required: true, tooltip: 'CS score year 2 (0-20)' }
-        ];
-
-        const secondYearFields = [
-            { label: 'L1 Average', name: 'l1', type: 'number', step: '0.01', min: '0', max: '20', required: true, tooltip: 'First year license average (0-20)' },
-            { label: 'L2 Average', name: 'l2', type: 'number', step: '0.01', min: '0', max: '20', required: true, tooltip: 'Second year license average (0-20)' },
-            { label: 'L3 Average', name: 'l3', type: 'number', step: '0.01', min: '0', max: '20', required: true, tooltip: 'Third year license average (0-20)' },
-            { label: 'M1 Average', name: 'm1', type: 'number', step: '0.01', min: '0', max: '20', required: true, tooltip: 'First year master average (0-20)' },
-            { label: 'Birth Year', name: 'birthYear', type: 'number', min: '1900', max: '2023', required: true, tooltip: 'Year of birth' },
-            { label: 'Bac Score', name: 'bacScore', type: 'number', step: '0.01', min: '0', max: '20', required: true, tooltip: 'Baccalaureate score (0-20)' },
-            { label: 'Redoublant', name: 'redoublant', type: 'checkbox', tooltip: 'Check if repeated a year' }
-        ];
-
-        function renderFields(fields) {
-            formFields.innerHTML = fields.map(field => `
-                <div class='group relative'>
-                    <label class='block text-sm font-medium text-gray-700 flex items-center'>
-                        ${field.label}
-                        ${field.tooltip ? `<i class='fas fa-info-circle ml-2 text-gray-500'></i><span class='tooltip absolute left-0 top-10 bg-gray-800 text-white text-xs rounded py-1 px-2 z-10'>${field.tooltip}</span>` : ''}
-                    </label>
-                    ${field.type === 'checkbox' ? `
-                        <input type='checkbox' name='${field.name}' class='mt-1 rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200'>
-                    ` : `
-                        <input type='${field.type}' name='${field.name}' ${field.step ? `step='${field.step}'` : ''} ${field.min ? `min='${field.min}'` : ''} ${field.max ? `max='${field.max}'` : ''} ${field.required ? 'required' : ''} class='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 bg-white' oninput='validateInput(this)'>
-                    `}
-                </div>
-            `).join('');
-        }
-
-        function validateInput(input) {
-            const value = parseFloat(input.value);
-            const min = parseFloat(input.min);
-            const max = parseFloat(input.max);
-            if (input.required && !input.value) {
-                input.classList.add('invalid-input');
-            } else if (input.type === 'number' && (value < min || value > max)) {
-                input.classList.add('invalid-input');
-            } else {
-                input.classList.remove('invalid-input');
-            }
-        }
-
-        function updateForm() {
-            const year = yearSelect.value;
-            renderFields(year === 'first' ? firstYearFields : secondYearFields);
-        }
-
-        yearSelect.addEventListener('change', updateForm);
-        updateForm();
-
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            calculateBtn.disabled = true;
-            calculateBtn.textContent = 'Calculating...';
-            progressBar.classList.remove('hidden');
-            progressBar.style.width = '100%';
-            errorDiv.classList.add('hidden');
-            resultDiv.classList.add('hidden');
-
-            const formData = Object.fromEntries(new FormData(form));
+        function calculateScoreA(data) {
             try {
-                const response = await axios.post(`/api/calculate/${yearSelect.value}`, formData);
-                const data = response.data;
-                if (data.error) {
-                    errorDiv.textContent = data.error;
-                    errorDiv.classList.remove('hidden');
-                } else {
-                    resultContent.innerHTML = yearSelect.value === 'first' ? `
-                        <p>Score A: <span class='font-bold'>${data.scoreA}</span></p>
-                        <p>Score E: <span class='font-bold'>${data.scoreE}</span> (Math: ${data.scoreEComponents.math}, Physics: ${data.scoreEComponents.physics}, CS: ${data.scoreEComponents.cs})</p>
-                        <p>Global Score: <span class='font-bold'>${data.globalScore}</span></p>
-                    ` : `
-                        <p>Score: <span class='font-bold'>${data.score}</span></p>
-                    `;
-                    suggestionsList.innerHTML = data.suggestions.map(s => `
-                        <li class='flex items-center'>
-                            ${s.includes('ENIT') ? '<i class="fas fa-university mr-2 text-blue-500"></i>' : 
-                              s.includes('ENSI') ? '<i class="fas fa-laptop-code mr-2 text-blue-500"></i>' : 
-                              '<i class="fas fa-cogs mr-2 text-blue-500"></i>'}
-                            ${s}
-                        </li>
-                    `).join('');
-                    resultDiv.classList.remove('hidden');
-                }
-            } catch (err) {
-                errorDiv.textContent = 'Error calculating score. Please check your inputs.';
-                errorDiv.classList.remove('hidden');
-            }
-            calculateBtn.disabled = false;
-            calculateBtn.textContent = 'Calculate Score';
-            progressBar.style.width = '0';
-            progressBar.classList.add('hidden');
-        });
+                const mg = parseFloat(data.mg || 0);
+                const rank1 = parseInt(data.rank1 || 1);
+                const effectif1 = parseInt(data.effectif1 || 1);
+                const rank2 = parseInt(data.rank2 || 1);
+                const effectif2 = parseInt(data.effectif2 || 1);
+                const birthYear = parseInt(data.birthYear || 2000);
+                const bacScore = parseFloat(data.bacScore || 0);
+                const french1 = parseFloat(data.french1 || 0);
+                const french2 = parseFloat(data.french2 || 0);
+                const english1 = parseFloat(data.english1 || 0);
+                const english2 = parseFloat(data.english2 || 0);
+                const math1 = parseFloat(data.math1 || 0);
+                const math2 = parseFloat(data.math2 || 0);
+                const physics1 = parseFloat(data.physics1 || 0);
+                const physics2 = parseFloat(data.physics2 || 0);
+                const cs1 = parseFloat(data.cs1 || 0);
+                const cs2 = parseFloat(data.cs2 || 0);
 
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', (e) => {
-                e.preventDefault();
-                document.querySelector(anchor.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
-            });
+                let M = 0;
+                if (mg >= 15) M = 100;
+                else if (mg > 10 && mg < 15) M = 20 * (mg - 10);
+
+                const ri1 = (rank1 - 1) / effectif1;
+                const ri2 = (rank2 - 1) / effectif2;
+                const Ri1 = ri1 <= 0.3 ? 100 - (700 * ri1) / 3 : 0;
+                const Ri2 = ri2 <= 0.3 ? 100 - (700 * ri2) / 3 : 0;
+                const R = (Ri1 + Ri2) / 2;
+
+                const B1 = birthYear >= 2023 - 22 ? 5 : 0;
+
+                let B2 = 0;
+                if (bacScore >= 16) B2 = 20;
+                else if (bacScore >= 14) B2 = 15;
+                else if (bacScore >= 12) B2 = 10;
+                else if (bacScore >= 11) B2 = 5;
+
+                const ML = (french1 + french2 + english1 + english2) / 4;
+
+                const score_e = ((math1 + math2) * 0.4 + (physics1 + physics2) * 0.3 + (cs1 + cs2) * 0.3) / 2 * 5;
+
+                const score_a = 0.2 * M + (1.4 / 3) * R + (5 / 6) * ML + (2 / 3) * (B1 + B2);
+                const globalScore = score_a * 0.7 + score_e * 0.3;
+
+                const suggestions = Object.entries(ORIENTATION_THRESHOLDS).map(([school, thresholds]) => {
+                    const status = globalScore >= thresholds.avg_score ? 'Strong' : globalScore >= thresholds.min_score ? 'Moderate' : 'Low';
+                    return `${school}: ${status} chance (Min: ${thresholds.min_score}, Avg: ${thresholds.avg_score})`;
+                });
+
+                return {
+                    scoreA: score_a.toFixed(2),
+                    scoreE: score_e.toFixed(2),
+                    globalScore: globalScore.toFixed(2),
+                    scoreEComponents: {
+                        math: ((math1 + math2) / 2).toFixed(2),
+                        physics: ((physics1 + physics2) / 2).toFixed(2),
+                        cs: ((cs1 + cs2) / 2).toFixed(2)
+                    },
+                    suggestions
+                };
+            } catch (e) {
+                return { error: 'Invalid input data' };
+            }
+        }
+
+        function calculateScoreSecondYear(data) {
+            try {
+                const l1 = parseFloat(data.l1 || 0);
+                const l2 = parseFloat(data.l2 || 0);
+                const l3 = parseFloat(data.l3 || 0);
+                const m1 = parseFloat(data.m1 || 0);
+                const birthYear = parseInt(data.birthYear2 || 2000);
+                const bacScore = parseFloat(data.bacScore2 || 0);
+                const redoublant = data.redoublant || false;
+
+                const mg = (l1 + l2 + l3 + m1) / 4;
+                let M = 0;
+                if (mg >= 15) M = 100;
+                else if (mg > 10 && mg < 15) M = 20 * (mg - 10);
+
+                const B1 = birthYear >= 2023 - 24 ? 5 : 0;
+
+                let B2 = 0;
+                if (bacScore >= 16) B2 = 20;
+                else if (bacScore >= 14) B2 = 15;
+                else if (bacScore >= 12) B2 = 10;
+                else if (bacScore >= 11) B2 = 5;
+
+                const C = redoublant ? 0.8 : 1;
+
+                const score = C * (M + B1 + B2);
+
+                const suggestions = Object.entries(ORIENTATION_THRESHOLDS).map(([school, thresholds]) => {
+                    const status = score >= thresholds.avg_score ? 'Strong' : score >= thresholds.min_score ? 'Moderate' : 'Low';
+                    return `${school}: ${status} chance (Min: ${thresholds.min_score}, Avg: ${thresholds.avg_score})`;
+                });
+
+                return { score: score.toFixed(2), suggestions };
+            } catch (e) {
+                return { error: 'Invalid input data' };
+            }
+        }
+
+        function calculateScore() {
+            const year = document.getElementById('year-select').value;
+            const resultsDiv = document.getElementById('results');
+            const scoreResults = document.getElementById('score-results');
+            const suggestionsList = document.getElementById('suggestions');
+
+            if (year === 'first') {
+                const data = {
+                    mg: document.getElementById('mg').value,
+                    rank1: document.getElementById('rank1').value,
+                    effectif1: document.getElementById('effectif1').value,
+                    rank2: document.getElementById('rank2').value,
+                    effectif2: document.getElementById('effectif2').value,
+                    birthYear: document.getElementById('birthYear').value,
+                    bacScore: document.getElementById('bacScore').value,
+                    french1: document.getElementById('french1').value,
+                    french2: document.getElementById('french2').value,
+                    english1: document.getElementById('english1').value,
+                    english2: document.getElementById('english2').value,
+                    math1: document.getElementById('math1').value,
+                    math2: document.getElementById('math2').value,
+                    physics1: document.getElementById('physics1').value,
+                    physics2: document.getElementById('physics2').value,
+                    cs1: document.getElementById('cs1').value,
+                    cs2: document.getElementById('cs2').value
+                };
+                const result = calculateScoreA(data);
+                if (result.error) {
+                    scoreResults.innerHTML = `<p class="text-red-500">${result.error}</p>`;
+                } else {
+                    scoreResults.innerHTML = `
+                        <p>Score A: ${result.scoreA}</p>
+                        <p>Score E: ${result.scoreE}</p>
+                        <p>Global Score: ${result.globalScore}</p>
+                        <p>Math Average: ${result.scoreEComponents.math}</p>
+                        <p>Physics Average: ${result.scoreEComponents.physics}</p>
+                        <p>CS Average: ${result.scoreEComponents.cs}</p>
+                    `;
+                    suggestionsList.innerHTML = result.suggestions.map(s => `<li>${s}</li>`).join('');
+                }
+            } else {
+                const data = {
+                    l1: document.getElementById('l1').value,
+                    l2: document.getElementById('l2').value,
+                    l3: document.getElementById('l3').value,
+                    m1: document.getElementById('m1').value,
+                    birthYear2: document.getElementById('birthYear2').value,
+                    bacScore2: document.getElementById('bacScore2').value,
+                    redoublant: document.getElementById('redoublant').checked
+                };
+                const result = calculateScoreSecondYear(data);
+                if (result.error) {
+                    scoreResults.innerHTML = `<p class="text-red-500">${result.error}</p>`;
+                } else {
+                    scoreResults.innerHTML = `<p>Score: ${result.score}</p>`;
+                    suggestionsList.innerHTML = result.suggestions.map(s => `<li>${s}</li>`).join('');
+                }
+            }
+            resultsDiv.classList.remove('hidden');
+        }
+
+        document.getElementById('year-select').addEventListener('change', function() {
+            const firstYearForm = document.getElementById('first-year-form');
+            const secondYearForm = document.getElementById('second-year-form');
+            if (this.value === 'first') {
+                firstYearForm.classList.remove('hidden');
+                secondYearForm.classList.add('hidden');
+            } else {
+                firstYearForm.classList.add('hidden');
+                secondYearForm.classList.remove('hidden');
+            }
+            document.getElementById('results').classList.add('hidden');
         });
     </script>
 </body>
